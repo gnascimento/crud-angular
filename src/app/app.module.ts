@@ -32,6 +32,7 @@ import {PanelModule} from 'primeng/panel';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     InputTextModule,

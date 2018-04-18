@@ -5,10 +5,27 @@
           <span class="ui-panel-title">Cadastro de Pessoa</span>
       </div>
   </p-header>
-  The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding.
-  His beloved son Michael has just come home from the war, but does not intend to become part of his father's business.
-  Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family,
-  kind and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the family.
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" pInputText [(ngModel)]="pessoa.nome" class="form-control"/>
+      </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>CPF</label>
+            <p-inputMask mask="999-999-999-99" [(ngModel)]="pessoa.cpf" styleClass="form-control"></p-inputMask>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Data de Nascimento</label><br>
+            <p-calendar [(ngModel)]="pessoa.dataNascimento" dateFormat="dd/mm/yy" inputStyleClass="form-control mask-data"></p-calendar>
+        </div>
+    </div>
+
+  </div>
   <p-footer>
       <button pButton type="button" icon="fa-plus" label="New" class="ui-button-info"></button>
       <button pButton type="button" icon="fa-list" label="View" class="ui-button-success"></button>
