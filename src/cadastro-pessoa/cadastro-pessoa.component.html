@@ -12,21 +12,28 @@
         <input type="text" pInputText [(ngModel)]="pessoa.nome" class="form-control"/>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <label>CPF</label>
             <p-inputMask mask="999-999-999-99" [(ngModel)]="pessoa.cpf" styleClass="form-control"></p-inputMask>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <label>Data de Nascimento</label><br>
             <p-calendar [(ngModel)]="pessoa.dataNascimento" dateFormat="dd/mm/yy" inputStyleClass="form-control mask-data"></p-calendar>
         </div>
     </div>
+    <div class="col-md-2">
+        <div class="form-group">
+          <label>Salário (R$):</label>
+          <input type="number" pInputText [(ngModel)]="pessoa.salario" pattern="[0-9]+([,\.][0-9]+)?" step="0.01" class="form-control money"/>
+        </div>
+    </div>
 
   </div>
   <p-footer>
+      {{pessoa.salario}}
       <button pButton type="button" icon="fa-plus" label="New" class="ui-button-info"></button>
       <button pButton type="button" icon="fa-list" label="View" class="ui-button-success"></button>
   </p-footer>
