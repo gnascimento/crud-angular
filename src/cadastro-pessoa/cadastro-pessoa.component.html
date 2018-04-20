@@ -32,9 +32,12 @@
     </div>
 
   </div>
+
   <p-footer>
-      {{pessoa.salario}}
-      <button pButton type="button" icon="fa-plus" label="New" class="ui-button-info"></button>
-      <button pButton type="button" icon="fa-list" label="View" class="ui-button-success"></button>
+    <div class="row">
+      <div class="offset-md-10 col-md-2 text-right">
+        <p-button label="Salvar" (click)="salvarPessoa()"></p-button>
+      </div>
+    </div>
   </p-footer>
 </p-panel>

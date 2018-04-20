@@ -2,11 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CadastroPessoaComponent } from '../cadastro-pessoa/cadastro-pessoa.component';
+import { CadastroPessoaService } from '../cadastro-pessoa/cadastro-pessoa.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
+
+
 
 /*
   imports PRIME NG
@@ -34,6 +39,8 @@ import {PanelModule} from 'primeng/panel';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     InputTextModule,
     CalendarModule,
@@ -49,7 +56,7 @@ import {PanelModule} from 'primeng/panel';
     TabViewModule,
     PanelModule
   ],
-  providers: [],
+  providers: [ CadastroPessoaService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
