@@ -8,32 +8,22 @@ import "rxjs/add/operator/do";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable()
-export class CadastroPessoaService extends AbstractService {
+export class BuscarPessoaService extends AbstractService {
   constructor(private _http: HttpClient) {
     super();
   }
 
-  salvarPessoa(pessoa: any): Observable<any> {
-    const endereco = AbstractService.URL_SERVIDOR + "/salvar_pessoa.php";
-
-    const json_pessoa = JSON.stringify(pessoa);
-
-    // const headers = new Headers();
-    // headers.append("Content-Type", "application/x-www-form-urlencoded");
-    // const urlSearchParams = new URLSearchParams();
-    // urlSearchParams.append("json", json_pessoa);
-    // const body = urlSearchParams.toString();
-
+  buscarPessoas(): Observable<any> {
+    let endereco = AbstractService.URL_SERVIDOR + "/listar_pessoas.php";
     return this._http
-      // .post(endereco, body, { headers: headers })
-      .post(endereco, json_pessoa)
+      .get(endereco)
       .map(data => data)
       .do(data => console.log("All: " + JSON.stringify(data)))
       .catch(super.handleError);
   }
 
-  excluirPessoa(id) {
-    let endereco = AbstractService.URL_SERVIDOR + "/excluir_pessoa.php?";
+  buscarCadastroPessoa(id) {
+    let endereco = AbstractService.URL_SERVIDOR + "/buscar_pessoa.php?";
     const params = new URLSearchParams();
     params.append("id", id);
     endereco += params.toString();
@@ -43,4 +33,5 @@ export class CadastroPessoaService extends AbstractService {
       .do(data => console.log("All: " + JSON.stringify(data)))
       .catch(super.handleError);
   }
+
 }

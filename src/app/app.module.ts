@@ -10,6 +10,9 @@ import { CadastroPessoaComponent } from "../cadastro-pessoa/cadastro-pessoa.comp
 import { CadastroPessoaService } from "../cadastro-pessoa/cadastro-pessoa.service";
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { BuscarPessoaComponent } from "../buscar-pessoa/buscar-pessoa.component";
+import { BuscarPessoaService } from "../buscar-pessoa/buscar-pessoa.service";
+
 
 /*
   imports PRIME NG
@@ -28,9 +31,16 @@ import { TableModule } from "primeng/table";
 import { TabViewModule } from "primeng/tabview";
 import { PanelModule } from "primeng/panel";
 import { DialogModule } from "primeng/dialog";
+import { GrowlModule } from 'primeng/growl';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+
+
+
 
 @NgModule({
-  declarations: [AppComponent, CadastroPessoaComponent, DashboardComponent],
+  declarations: [AppComponent, CadastroPessoaComponent, DashboardComponent, BuscarPessoaComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -51,9 +61,11 @@ import { DialogModule } from "primeng/dialog";
     TableModule,
     TabViewModule,
     PanelModule,
-    DialogModule
+    DialogModule,
+    GrowlModule,
+    ConfirmDialogModule
   ],
-  providers: [CadastroPessoaService],
+  providers: [CadastroPessoaService, BuscarPessoaService, MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

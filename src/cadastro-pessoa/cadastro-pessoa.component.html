@@ -1,97 +1,112 @@
-<p-panel>
-  <p-header>
-    <div class="ui-helper-clearfix">
-      <span class="ui-panel-title">Cadastro de Pessoa</span>
-    </div>
-  </p-header>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label>Nome</label>
-        <input type="text" pInputText [(ngModel)]="pessoa.nome" class="form-control" />
+<form>
+  <p-panel>
+    <p-header>
+      <div class="ui-helper-clearfix">
+        <span class="ui-panel-title">Cadastro de Pessoa</span>
       </div>
-    </div>
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>CPF</label>
-        <p-inputMask mask="999-999-999-99" [(ngModel)]="pessoa.cpf" styleClass="form-control"></p-inputMask>
+    </p-header>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Nome*</label>
+          <input type="text" pInputText name="pessoa.nome" [(ngModel)]="pessoa.nome" class="form-control" />
+        </div>
       </div>
-    </div>
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Data de Nascimento</label>
-        <br>
-        <p-calendar [(ngModel)]="pessoa.dataNascimento" dateFormat="dd/mm/yy" inputStyleClass="form-control mask-data"></p-calendar>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>CPF*</label>
+          <p-inputMask mask="999.999.999-99" name="pessoa.cpf" [(ngModel)]="pessoa.cpf" styleClass="form-control"></p-inputMask>
+        </div>
       </div>
-    </div>
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Salário (R$):</label>
-        <input type="number" pInputText [(ngModel)]="pessoa.salario" pattern="[0-9]+([,\.][0-9]+)?" step="0.01" class="form-control money"
-        />
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Data de Nascimento</label>
+          <br>
+          <p-calendar [(ngModel)]="pessoa.dataNascimento" name="pessoa.dataNascimento" dateFormat="dd/mm/yy" inputStyleClass="form-control mask-data"></p-calendar>
+        </div>
       </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Salário (R$):</label>
+          <input type="number" pInputText [(ngModel)]="pessoa.salario" name="pessoa.salario" pattern="[0-9]+([,\.][0-9]+)?" step="0.01"
+            class="form-control money" />
+        </div>
+      </div>
+
     </div>
 
-  </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p-table #dt [columns]="cols_pessoa" [value]="pessoa.dependentes" [paginator]="true" [rows]="10">
+          <ng-template pTemplate="caption">
+            <div class="row">
 
-  <div class="row">
-    <div class="col-md-12">
-      <p-table #dt [columns]="cols_pessoa" [value]="pessoa.dependentes" [paginator]="true" [rows]="10">
-        <ng-template pTemplate="caption">
-          <div class="row">
+              <div class="col-md-3 text-right">
+                <div class="ui-inputgroup">
 
-            <div class="col-md-3 text-right">
-              <div class="ui-inputgroup">
+                  <input type="text" pInputText size="50" placeholder="Busca geral" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                  <span class="ui-inputgroup-addon">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
 
-                <input type="text" pInputText size="50" placeholder="Busca geral" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                <span class="ui-inputgroup-addon">
-                  <i class="fa fa-search"></i>
-                </span>
+              <div class="offset-md-8 col-md-1 text-right align-middle">
+                <button pButton icon="fa fa-fw fa-plus" value="Adicionar" (click)="showFrmAddDependente()" class="ui-button-secondary"></button>
               </div>
             </div>
 
-            <div class="offset-md-8 col-md-1 text-right align-middle">
-                <button pButton icon="fa fa-fw fa-plus" value="Adicionar" (click)="showFrmAddDependente()" class="ui-button-secondary"></button>
-              </div>
-          </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+              <th>Ações</th>
+            </tr>
+            <tr>
+              <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <input *ngSwitchCase="'nome'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                <input *ngSwitchCase="'cpf'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+              </th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template let-rowIndex="rowIndex" pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+              <td>
+                <button pButton type="button" (click)="removerDependente(rowIndex)" icon="fa fa-trash" class="ui-button-danger"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
 
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns">
-              {{col.header}}
-            </th>
-          </tr>
-          <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
-              <input *ngSwitchCase="'nome'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-              <input *ngSwitchCase="'cpf'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">
-              {{rowData[col.field]}}
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-
-        </ng-template>
-      </p-table>
-    </div>
-  </div>
-
-  <p-footer>
-    <div class="row">
-      <div class="offset-md-10 col-md-2 text-right">
-        <p-button label="Salvar" (click)="salvarPessoa()"></p-button>
+          </ng-template>
+        </p-table>
       </div>
     </div>
-  </p-footer>
-</p-panel>
 
+    <p-footer>
+      <div class="row">
+        <div class="offset-md-9"></div>
+        <div class="col-md-1 text-right">
+          <button type="button" pButton class="ui-button-secondary" label="Voltar" (click)="voltarParaLista()"></button>
+        </div>
+        <div class="col-md-1 text-right">
+          <p-button label="Salvar" (click)="salvarPessoa()"></p-button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          Campos marcados com * são obrigatórios
+        </div>
+      </div>
+    </p-footer>
+  </p-panel>
+</form>
 <p-dialog [(visible)]="displayFrmAddDependente">
   <p-header>
     Adicionar Dependente
@@ -104,11 +119,16 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>CPF</label>
-        <p-inputMask mask="999-999-999-99" [(ngModel)]="dependenteAdicional.cpf" styleClass="form-control"></p-inputMask>
+        <p-inputMask mask="999.999.999-99" [(ngModel)]="dependenteAdicional.cpf" styleClass="form-control"></p-inputMask>
       </div>
     </div>
   </div>
   <p-footer>
-
+    <div class="row" style="float: right; margin-bottom: 10px;">
+      <div class="col-md-3 text-right">
+        <button class="btn btn-primary" (click)="adicionarDependente()">Adicionar Dependente</button>
+      </div>
+    </div>
+    <br/>
   </p-footer>
 </p-dialog>
